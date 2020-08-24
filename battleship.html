@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <title>Purse Dig!</title>
+        <style>
+            body {
+                background-color: rgb(8,29,63);
+                position: relative;
+            }
+
+            div#board {
+                position: absolute;
+                z-index: 1;
+                width: 1024px;
+                height: 863px;
+                left: calc(50% - 512px);
+                background: url("newboard.jpg") no-repeat;
+                
+            }
+
+            div#messageArea {
+                position: absolute;
+                top: 25px;
+                left: 470px;
+                color: gold;
+                font-size: 1.3em;
+            }
+
+            div#keyDisplayOne {
+                position: absolute;
+                top: 10px;
+                right: 165px;
+                width: 71px;
+                height: 75px;
+                background: url("key.png");
+                visibility: hidden;
+            }
+
+            div#keyDisplayTwo {
+                position: absolute;
+                top: 10px;
+                right: 236px;
+                width: 71px;
+                height: 75px;
+                background: url("key2.png");
+                visibility: hidden;
+            }
+
+            div#keyDisplayThree {
+                position: absolute;
+                top: 10px;
+                right: 307px;
+                width: 71px;
+                height: 75px;
+                background: url("key3.png");
+                visibility: hidden;
+            }
+
+
+            table {
+                position: absolute;
+                left: 173px;
+                top: 98px;
+                border-spacing: 0px;
+ /* cell color test */
+                /* background-color:aquamarine; */
+/* end cell color test */
+            }
+
+            td {
+                width: 94px;
+                height: 94px;
+                /* background-image: url("miss.png"); */
+            }
+
+
+/* hover test */
+            /* td:hover {
+                background-color: white;
+            } */
+/* end hover test */
+
+            form {
+                position: absolute;
+                top: 10px;
+                left: 173px;
+                padding: 15px;
+                background-color: rgb(27, 117, 187);
+            }
+
+            form input {
+                background-color: rgb(38, 169, 224);
+                border-color: rgb(27, 117, 187);
+                font-size: 1em;
+            }
+
+            .hit {
+                background: url("ship.png") no-repeat center center;
+            }
+
+            .miss {
+                background: url("miss.png") no-repeat center center;
+            }
+
+            div#instructions {
+                position: absolute;
+                z-index: 2; 
+                width: 1024px;
+                height: 863px;
+                left: calc(50% - 512px);
+                background: url("boardex.jpg") no-repeat;
+
+            }
+
+            div#instructions button {
+                position: absolute;
+                bottom: 130px;
+                right: 350px;
+                font-size: x-large;
+                padding: 20px 10px;
+                text-transform: capitalize;
+                background-color: gold;
+            }
+
+            #restartgame {
+
+                position: fixed;
+                top: 10px;
+                left: 630px;
+                font-size: x-large;
+                padding: 20px 10px;
+                text-transform: capitalize;
+                background-color: gold;
+                visibility: hidden;
+
+            }
+        </style>
+    </head>
+    <body>
+
+        
+
+        <div id="instructions">
+            <button onclick=removeInstructions()>Start Game!</button>
+        </div>
+
+        <div id="board">
+            <button id="restartgame" onclick=restartGame()>Play Again!</button>
+            <!-- For displaying messages like You Found a Key! -->
+            <div id="messageArea"></div>
+            <div id="keyDisplayOne"></div>
+            <div id="keyDisplayTwo"></div>
+            <div id="keyDisplayThree"></div>
+            <table>
+                <!-- Row 0 -->
+                <tr>
+                    <td id="00"></td>
+                    <td id="01"></td>
+                    <td id="02"></td>
+                    <td id="03"></td>
+                    <td id="04"></td>
+                    <td id="05"></td>
+                    <td id="06"></td>
+                </tr>
+                <!-- Row 1 -->
+                <tr>
+                    <td id="10"></td>
+                    <td id="11"></td>
+                    <td id="12"></td>
+                    <td id="13"></td>
+                    <td id="14"></td>
+                    <td id="15"></td>
+                    <td id="16"></td>
+                </tr>
+                <!-- Row 2 -->
+                <tr>
+                    <td id="20"></td>
+                    <td id="21"></td>
+                    <td id="22"></td>
+                    <td id="23"></td>
+                    <td id="24"></td>
+                    <td id="25"></td>
+                    <td id="26"></td>
+                </tr>
+                <!-- Row 3 -->
+                <tr>
+                    <td id="30"></td>
+                    <td id="31"></td>
+                    <td id="32"></td>
+                    <td id="33"></td>
+                    <td id="34"></td>
+                    <td id="35"></td>
+                    <td id="36"></td>
+                </tr>
+                <!-- Row 4 -->
+                <tr>
+                    <td id="40"></td>
+                    <td id="41"></td>
+                    <td id="42"></td>
+                    <td id="43"></td>
+                    <td id="44"></td>
+                    <td id="45"></td>
+                    <td id="46"></td>
+                </tr>
+                <!-- Row 5 -->
+                <tr>
+                    <td id="50"></td>
+                    <td id="51"></td>
+                    <td id="52"></td>
+                    <td id="53"></td>
+                    <td id="54"></td>
+                    <td id="55"></td>
+                    <td id="56"></td>
+                </tr>
+                <!-- Row 6 -->
+                <tr>
+                    <td id="60"></td>
+                    <td id="61"></td>
+                    <td id="62"></td>
+                    <td id="63"></td>
+                    <td id="64"></td>
+                    <td id="65"></td>
+                    <td id="66"></td>
+                </tr>
+            </table>
+
+            <!-- Input Form -->
+            <form id="inputwindow">
+                <input type="text" id="guessInput" placeholder="A0">
+                <input type="button" id="fireButton" value="Dig!">
+            </form>
+            
+        </div>
+        <script src="battleship.js"></script>
+    </body>
+</html>
